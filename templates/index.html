@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cortexa — AI Study Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen">
+  <!-- Header -->
+  <header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">C</div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Cortexa</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Open AI Study Assistant • No Login Required</p>
+        </div>
+      </div>
+      <button id="loadSampleBtn" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        Load Sample Notes
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Left Input Column -->
+    <section class="lg:col-span-5 space-y-5">
+      <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <label for="notesInput" class="font-semibold text-sm">Study Material / Notes</label>
+          <span id="charCount" class="text-xs text-slate-400">0 chars</span>
+        </div>
+
+        <textarea id="notesInput" rows="11" placeholder="Paste your lecture notes, article, or textbook chapter here..."
+          class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea>
+
+        <!-- Controls -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div>
+            <label class="block text-xs font-medium text-slate-5
