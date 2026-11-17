@@ -16,9 +16,21 @@ def ask():
     if not prompt:
         return jsonify({"error": "No prompt provided"}), 400
     try:
+        models_to_try = ["gemini-3.8-flash", "gemini-2.5-flash-lite"]
+last_error = ""
+for model_name in models_to_try:
+    try:
         response = client.models.generate_content(
-            model="gemini-3.8-flash",
+            model=model_name,
             contents=prompt,
+        )
+        return jsonify({"reply": response.text})
+    except Exception as e:
+        last_error = str(e)
+        if "503" in last_error or "UNAVAILABLE" in last_error:
+            continue
+        return jsonify({"error": f"Gemini API Error: {last_error}"}), 500
+return jsonify({"error": f"All models temporarily busy: {last_error}"}), 503
         )
         return jsonify({"reply": response.text})
     except Exception as e:
