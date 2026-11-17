@@ -3,8 +3,6 @@ from flask import Flask, render_template, request, jsonify
 from google import genai
 
 app = Flask(__name__)
-
-# Uses GEMINI_API_KEY from Render Environment Variables
 client = genai.Client()
 
 @app.route("/")
@@ -13,7 +11,7 @@ def home():
 
 @app.route("/ask", methods=["POST"])
 def ask():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     prompt = data.get("prompt", "")
     if not prompt:
         return jsonify({"error": "No prompt provided"}), 400
