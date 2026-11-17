@@ -1,11 +1,30 @@
 import os
-from flask import Flask
+from flask import Flask, render_template, request, jsonify
+from google import genai
 
-# MUST be at the top level (not indented inside any function or if-block)
 app = Flask(__name__)
 
-# --- Keep all your existing @app.route(...) and helper functions here ---
+# Uses GEMINI_API_KEY from Render Environment Variables
+client = genai.Client()
 
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/ask", methods=["POST"])
+def ask():
+    data = request.get_json()
+    prompt = data.get("prompt", "")
+    if not prompt:
+        return jsonify({"error": "No prompt provided"}), 400
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
+        return jsonify({"reply": response.text})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
